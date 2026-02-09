@@ -1,0 +1,13 @@
+{
+  "name": "openclaw-continuity",
+  "version": "1.0.0",
+  "description": "Persistent continuity management for AI agents with lifecycle interception hooks",
+  "main": "index.ts",
+  "type": "module",
+  "keywords": ["openclaw", "plugin", "continuity", "memory", "audit"],
+  "author": "",
+  "license": "MIT",
+  "peerDependencies": {
+    "openclaw": ">=2026.2.0"
+  }
+}

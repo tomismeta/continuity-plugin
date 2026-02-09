@@ -1,0 +1,78 @@
+{
+  "id": "continuity",
+  "name": "Continuity",
+  "description": "Persistent continuity management for AI agents. Ensures continuity across sessions, prevents data loss from compaction, and maintains reliable audit trails with integrity verification.",
+  "version": "1.0.0",
+  "kind": "memory",
+  "configSchema": {
+    "type": "object",
+    "properties": {
+      "logLevel": {
+        "type": "string",
+        "enum": ["off", "judgment", "everything"],
+        "default": "everything",
+        "description": "Logging level: off (disable), judgment (decisions only), everything (all actions)"
+      },
+      "storagePath": {
+        "type": "string",
+        "default": "~/.openclaw/continuity",
+        "description": "Local storage path for continuity data (never synced to git)"
+      },
+      "enableIntegrityCheck": {
+        "type": "boolean",
+        "default": true,
+        "description": "Enable cryptographic hash chaining for tamper detection"
+      },
+      "enablePreCompactionCheckpoint": {
+        "type": "boolean",
+        "default": true,
+        "description": "Capture checkpoints before memory compaction"
+      },
+      "blockOnPersistenceFailure": {
+        "type": "boolean",
+        "default": true,
+        "description": "Block critical actions if persistence fails (fail-closed)"
+      },
+      "maxBackupFiles": {
+        "type": "number",
+        "default": 24,
+        "description": "Maximum number of backup files to retain"
+      },
+      "criticalToolPatterns": {
+        "type": "array",
+        "items": { "type": "string" },
+        "default": ["write", "edit", "exec", "message", "browser", "nodes"],
+        "description": "Tool name patterns considered critical (require persistence before execution)"
+      },
+      "implicitResumeThresholdMinutes": {
+        "type": "number",
+        "default": 30,
+        "description": "Maximum time gap in minutes to trigger implicit session resumption on restart"
+      }
+    },
+    "required": []
+  },
+  "uiHints": {
+    "logLevel": {
+      "label": "Log Level",
+      "help": "Controls what gets logged: 'off' disables logging, 'judgment' logs only decisions/analysis, 'everything' logs all actions"
+    },
+    "storagePath": {
+      "label": "Storage Path",
+      "help": "Directory for continuity files. Should be local-only, never committed to git.",
+      "sensitive": false
+    },
+    "enableIntegrityCheck": {
+      "label": "Enable Integrity Checking",
+      "help": "Cryptographic hash chaining detects tampering with action history"
+    },
+    "blockOnPersistenceFailure": {
+      "label": "Block on Persistence Failure",
+      "help": "When enabled, critical actions will be blocked if logging fails (fail-closed security)"
+    },
+    "implicitResumeThresholdMinutes": {
+      "label": "Implicit Resume Threshold (minutes)",
+      "help": "If the gateway restarts within this many minutes of last activity, context will be automatically restored"
+    }
+  }
+}
